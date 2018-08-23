@@ -10,17 +10,18 @@ object Solution {
   def main(args: Array[String]): Unit = {
     val date1 = new java.util.Date()
     date1.getTime
-    var figure = ArrayBuffer.empty[Square]
+    //var figure = ArrayBuffer.empty[Square]
     val sumLimit = 10
-    var fileName = "src\\resource.txt"
-    readFile(fileName, figure)
+    val fileName = "src\\resource.txt"
+    val figure = readFile(fileName)
     permutation(0, figure, sumLimit)
     println("Figures count = " + count)
     val date2 = new java.util.Date()
     println(date2.getTime - date1.getTime)
   }
 
-  def readFile(fileName: String, figure: ArrayBuffer[Square]) {
+  private def readFile(fileName: String) :ArrayBuffer[Square]={
+    var figure = ArrayBuffer.empty[Square]
     val source = Source.fromFile(fileName, "UTF-8")
     val lines = source.getLines().toArray
     for (line <- lines) {
@@ -28,10 +29,10 @@ object Solution {
       val square = Square(coners(0), coners(1), coners(2), coners(3))
       figure += square
     }
+    figure
   }
 
-  def isCorrectFigure(figure: ArrayBuffer[Square], sumLimit: Int): Boolean = {
-    if (
+  private def isCorrectFigure(figure: ArrayBuffer[Square], sumLimit: Int): Boolean = {
       figure(0).coner2 + figure(1).coner1 <= sumLimit && // 1-2
         figure(0).coner3 + figure(2).coner2 + figure(3).coner1 <= sumLimit && //1-3-4
         figure(0).coner4 + figure(1).coner3 + figure(3).coner2 + figure(4).coner1 == sumLimit && // 1-2-4-5
@@ -45,14 +46,9 @@ object Solution {
         figure(7).coner4 + figure(8).coner3 + figure(10).coner2 + figure(11).coner1 == sumLimit && // 8-9-11-12
         figure(8).coner4 + figure(9).coner3 + figure(11).coner2 <= sumLimit && // 9-10-12
         figure(10).coner4 + figure(11).coner3 <= sumLimit // 11-12
-    ) {
-      true
-    } else {
-      false
-    }
   }
 
-  def permutation(start: Int, figure: ArrayBuffer[Square], sumLimit: Int): Unit = {
+  private def permutation(start: Int, figure: ArrayBuffer[Square], sumLimit: Int): Unit = {
     if (start == figure.size - 1) {
       if (isCorrectFigure(figure, sumLimit)) {
         count += 1

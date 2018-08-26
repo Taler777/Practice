@@ -31,33 +31,17 @@ object Solution {
     figure
   }
 
-//  private def isCorrectFigure(start: Int, figure: ArrayBuffer[Square], sumLimit: Int): Boolean = {
-//    figure(0).coner2 + figure(1).coner1 <= sumLimit && // 1-2
-//      figure(0).coner3 + figure(2).coner2 + figure(3).coner1 <= sumLimit && //1-3-4
-//      figure(0).coner4 + figure(1).coner3 + figure(3).coner2 + figure(4).coner1 == sumLimit && // 1-2-4-5
-//      figure(1).coner4 + figure(4).coner2 + figure(5).coner1 <= sumLimit && // 2-5-6
-//      figure(2).coner3 + figure(6).coner1 <= sumLimit && // 3-7
-//      figure(2).coner4 + figure(3).coner3 + figure(6).coner2 + figure(7).coner1 == sumLimit && // 3-4-7-8
-//      figure(3).coner4 + figure(4).coner3 + figure(7).coner2 + figure(8).coner1 == sumLimit && // 4-5-8-9
-//      figure(4).coner4 + figure(5).coner3 + figure(8).coner2 + figure(9).coner1 == sumLimit && // 5-6-9-10
-//      figure(5).coner4 + figure(9).coner2 <= sumLimit && // 6-10
-//      figure(6).coner4 + figure(7).coner3 + figure(10).coner1 <= sumLimit && // 7-8-11
-//      figure(7).coner4 + figure(8).coner3 + figure(10).coner2 + figure(11).coner1 == sumLimit && // 8-9-11-12
-//      figure(8).coner4 + figure(9).coner3 + figure(11).coner2 <= sumLimit && // 9-10-12
-//      figure(10).coner4 + figure(11).coner3 <= sumLimit // 11-12
-//  }
-
   private def isCorrectFigure2(start: Int, figure: ArrayBuffer[Square], sumLimit: Int): Boolean = {
 
     (start == 2 && figure(0).coner2 + figure(1).coner1 > sumLimit) || // 1-2 sq1
       (start == 4 && figure(0).coner3 + figure(2).coner2 + figure(3).coner1 > sumLimit) || //1-3-4 sq3
       (start == 5 && figure(0).coner4 + figure(1).coner3 + figure(3).coner2 + figure(4).coner1 != sumLimit) || // 1-2-4-5 sq4
-      (start == 5 && figure(1).coner4 + figure(4).coner2 + figure(5).coner1 > sumLimit) || // 2-5-6 sq5
+      (start == 6 && figure(1).coner4 + figure(4).coner2 + figure(5).coner1 > sumLimit) || // 2-5-6 sq5
       (start == 7 && figure(2).coner3 + figure(6).coner1 > sumLimit) || // 3-7 sq6
       (start == 8 && figure(2).coner4 + figure(3).coner3 + figure(6).coner2 + figure(7).coner1 != sumLimit) || // 3-4-7-8 sq7
       (start == 9 && figure(3).coner4 + figure(4).coner3 + figure(7).coner2 + figure(8).coner1 != sumLimit) || // 4-5-8-9 sq8
       (start == 10 && figure(4).coner4 + figure(5).coner3 + figure(8).coner2 + figure(9).coner1 != sumLimit) || // 5-6-9-10 sq9
-      (start == 11 && figure(5).coner4 + figure(9).coner2 > sumLimit) || // 6-10 sq9
+      (start == 10 && figure(5).coner4 + figure(9).coner2 > sumLimit) || // 6-10 sq9
       (start == 11 && figure(6).coner4 + figure(7).coner3 + figure(10).coner1 > sumLimit) || // 7-8-11
       (start == 11 && figure(7).coner4 + figure(8).coner3 + figure(10).coner2 + figure(11).coner1 != sumLimit) || // 8-9-11-12
       (start == 11 && figure(8).coner4 + figure(9).coner3 + figure(11).coner2 > sumLimit) || // 9-10-12
@@ -67,11 +51,9 @@ object Solution {
   private def permutation(start: Int, figure: ArrayBuffer[Square], sumLimit: Int): Unit = {
     if (isCorrectFigure2(start, figure, sumLimit)) return
     if (start == figure.size - 1) {
-//      if (isCorrectFigure(start, figure, sumLimit)) {
         count += 1
         figure.foreach(square => println(square.coner1 + " " + square.coner2 + " " + square.coner3 + " " + square.coner4))
         println()
-//      }
     }
 
     for (i <- start until figure.size) {
